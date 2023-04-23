@@ -1,0 +1,25 @@
+python program.py /path/to/directory 'old text' 'new text'
+import os
+
+def replace_text_in_file(file_path, old_text, new_text):
+    with open(file_path, 'r') as f:
+        file_content = f.read()
+        
+    file_content = file_content.replace(old_text, new_text)
+    
+    with open(file_path, 'w') as f:
+        f.write(file_content)
+
+def search_and_replace_in_directory(directory_path, old_text, new_text):
+    for subdir, dirs, files in os.walk(directory_path):
+        for file in files:
+            file_path = os.path.join(subdir, file)
+            if file_path.endswith('.txt'):
+                replace_text_in_file(file_path, old_text, new_text)
+
+if __name__ == '__main__':
+    directory_path = '/path/to/directory'
+    old_text = 'old text'
+    new_text = 'new text'
+    
+    search_and_replace_in_directory(directory_path, old_text, new_text)
